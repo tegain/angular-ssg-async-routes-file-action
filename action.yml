@@ -11,6 +11,10 @@ inputs:
     description: 'Expected Response type ("json" or "text") (default: "json")'
     required: false
     default: 'json'
+  responsePath:
+    description: 'Response property containing the list of routes (default: "null")'
+    required: false
+    default: 'null'
   file:
     description: 'Location and fileName (default: routesFile.txt)'
     required: false

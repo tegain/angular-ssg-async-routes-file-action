@@ -14,7 +14,10 @@ jobs:
         uses: ./
         with:
           file: "testfile.txt"
-          url: "https://api.jsonbin.io/v3/qs/65897ff01f5677401f131d06"
-          debug: 'true'
+          url: "https://api.jsonbin.io/v3/qs/65898bbfdc74654018888f7c"
+          responsePath: "record"
+          debug: "true"
       - name: List files
         run: ls
+      - name: Check routes file content
+        run: cat testfile.txt

@@ -19,13 +19,28 @@ const makeSureFoldersAreCreated = (filename) => {
 
 /**
  * @param data API response data
+ * @param {string} responsePath API response routes property path
  * @returns {string} file contents
  */
-function getFileContents(data) {
-  if (Array.isArray(data)) {
-    return data.join("\n");
+function getFileContents(data, responsePath) {
+  if (typeof data === "string") {
+    return data;
+  }
+  const routesPath =
+    responsePath === "null" ? data : resolvePath(responsePath, data);
+  if (Array.isArray(routesPath)) {
+    return routesPath.join("\n");
   }
   return data;
+}
+
+/**
+ * @param {string} pathString
+ * @param {object} obj
+ * @returns {unknown}
+ */
+function resolvePath(pathString, obj) {
+  return pathString.split(".").reduce((p, c) => (p && p[c]) || null, obj);
 }
 
 try {
@@ -34,8 +49,10 @@ try {
   /** @type {'json' | 'text'} */
   const responseType = core.getInput("type");
   /** @type {string} */
+  const responsePath = core.getInput("responsePath");
+  /** @type {string} */
   const file = core.getInput("file");
-  /** @type {'true' | 'false'} */
+  /** @type {boolean} */
   const isDebugMode = core.getInput("debug") === "true";
 
   console.log(`Fetch data started with`, `url: ${url}`, `file: ${file}`);
@@ -65,7 +82,7 @@ try {
         console.log("Current working directory", __dirname);
       }
       makeSureFoldersAreCreated(file);
-      fs.writeFileSync(file, getFileContents(data));
+      fs.writeFileSync(file, getFileContents(data, responsePath));
       console.log(`Successfully saved data from ${url} to ${file}`);
       if (isDebugMode) {
         console.log(fs.readFileSync(file, "utf-8"));
