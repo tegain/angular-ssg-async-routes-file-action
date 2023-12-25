@@ -1,0 +1,27 @@
+name: 'Fetch Angular routes and save them to a file for SSG builds'
+description: 'Action to fetch Angular routes from an API and save it to a file for SSG builds'
+branding:
+  icon: 'download'
+  color: 'green'
+inputs:
+  url:
+    description: 'URL of routes list API to fetch'
+    required: true
+  type:
+    description: 'Expected Response type ("json" or "text") (default: "json")'
+    required: false
+    default: 'json'
+  file:
+    description: 'Location and fileName (default: routesFile.txt)'
+    required: false
+    default: 'routesFile.txt'
+  debug:
+    description: 'Debug mode: logs additional informations. "true" or "false" (default: "false")'
+    required: false
+    default: 'false'
+outputs:
+  success:
+    description: 'If the data was saved'
+runs:
+  using: 'node12'
+  main: 'index.js'

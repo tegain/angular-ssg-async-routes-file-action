@@ -1,0 +1,20 @@
+name: Test Action
+
+on:
+  push:
+    branches: [master, main]
+
+jobs:
+  use-action:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Fetch Angular routes to file
+        uses: ./
+        with:
+          file: "testfile.txt"
+          url: "https://api.jsonbin.io/v3/qs/65897ff01f5677401f131d06"
+          debug: 'true'
+      - name: List files
+        run: ls
