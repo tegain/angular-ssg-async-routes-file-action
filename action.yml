@@ -1,4 +1,4 @@
-name: 'Fetch Angular routes and save them to a file for SSG builds'
+name: 'Angular SSG async routes file'
 description: 'Action to fetch Angular routes from an API and save it to a file for SSG builds'
 branding:
   icon: 'download'
